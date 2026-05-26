@@ -22,7 +22,6 @@ public class Sorting extends BaseTest {
         ShopPage shopPage = homePage.clickShopLink();
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        // Define our product view assertion card boundary tracker
         Locator firstProductCard = page.locator("a.group.card-hover.block").first();
 
         shopPage.selectSortOption("popular");
