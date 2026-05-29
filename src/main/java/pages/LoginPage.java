@@ -6,6 +6,7 @@ import constants.Data;
 public class LoginPage extends BasePage {
 
     public LoginPage(Page page) {
+
         super(page);
     }
 
@@ -13,8 +14,6 @@ public class LoginPage extends BasePage {
         navigateToLoginPage();
 
         page.click("button[type='submit']");
-
-        // 1. Guard: Wait for the login form to visually load before typing
         page.locator("input[type='email']").waitFor();
 
         page.fill("input[type='email']", Data.loginEmail);
