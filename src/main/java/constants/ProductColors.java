@@ -1,12 +1,7 @@
 package constants;
 
-/**
- * Global Constants configuration mapping the exact color
- * names for filtering products in the sidebar.
- */
 public final class ProductColors {
 
-    // Private constructor prevents instantiation
     private ProductColors() {}
 
     public static final String BLACK_COLOR  = "Black";

@@ -12,7 +12,6 @@ public class ShopPage extends BasePage {
     public ShopPage(Page page) {
         super(page);
         this.sortSelectDropdown = page.locator("div.relative select");
-        // Pinpoints the specific container layout wrapper for all filter items
         this.sidebarContainer = page.locator("div.space-y-6 div.space-y-1");
     }
 
@@ -45,8 +44,8 @@ public class ShopPage extends BasePage {
         return this;
     }
 
+    //--- SIZE SORTING
     public ShopPage selectSize(String sizeText) {
-        // Tightens the search path: look specifically for a button whose exact inner text matches your size
         Locator sizeButton = page.locator("button")
                 .filter(new Locator.FilterOptions().setHasText(("^" + sizeText + "$")))
                 .first();
@@ -56,11 +55,10 @@ public class ShopPage extends BasePage {
         return this;
     }
 
+    //--- COLOR SORTING
     public ShopPage selectColor(String colorName) {
-        // 1. Target the color layout block area safely without fragile parent links
         Locator colorSection = page.locator("div.space-y-6").filter(new Locator.FilterOptions().setHasText("COLOR"));
 
-        // 2. Find the circle button using standard Pattern flag compilation parameters
         Locator colorButton = colorSection.locator("button")
                 .filter(new Locator.FilterOptions().setHasText(
                         compile("^" + colorName + "$", java.util.regex.Pattern.CASE_INSENSITIVE)
