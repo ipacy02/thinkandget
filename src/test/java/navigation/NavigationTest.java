@@ -15,12 +15,8 @@ public class NavigationTest extends BaseTest {
         page.setViewportSize(1440, 900);
 
         LoginPage loginPage = new LoginPage(page);
-
-
         loginPage.login();
-
         HomePage homePage = new HomePage(page);
-
         homePage.clickShopLink();
         assertThat(page).hasURL(Expected.ShopLink);
 
