@@ -2,14 +2,14 @@ name: "Think & Get it Java CI"
 
 on:
   push:
-    branches: [ main, master, develop, ft/auth-security-validation ]
+    branches: [ main, master, ft/auth-security-validation ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   backend-build-test:
-    name: "Java CI Pipeline"
+    name: "Java Testing Pipeline"
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +23,5 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build and Test with Maven
+      - name: Build and Run Automation Tests
         run: mvn clean test
