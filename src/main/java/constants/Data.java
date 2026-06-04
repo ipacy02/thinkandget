@@ -1,8 +1,8 @@
 package constants;
 
 public class Data {
-    public static final String loginEmail = "mirimo@gmail.com";
-    public static final String loginPassword = "mirimo2020";
+    public static final String loginEmail = "admin@thinkandgetit.com";
+    public static final String loginPassword = "Admin@123456";
 
     // --- HAPPY PATH REGISTRATION ---
     public static final String registerFirstName = "Manzi";

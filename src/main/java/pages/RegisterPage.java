@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import constants.Data;
+import constants.RegisterLocators; // Imported centralized registration selectors
 
 public class RegisterPage extends BasePage {
 
@@ -11,24 +12,17 @@ public class RegisterPage extends BasePage {
     private final Locator emailInput;
     private final Locator passwordInput;
     private final Locator submitRegisterButton;
-
-    // Added locator to read frontend validation messages dynamically
     private final Locator errorAlert;
 
     public RegisterPage(Page page) {
         super(page);
-        this.firstNameInput = page.locator("input[placeholder='John']");
-        this.lastNameInput = page.locator("input[placeholder='Doe']");
-
-        this.emailInput = page.locator("input[placeholder='you@example.com']");
-        this.passwordInput = page.locator("input[type='password']");
-
-        this.submitRegisterButton = page.locator("button:has-text('Create account')");
-
-        // Catches standard frontend alert elements, toast messages, or validation layout nodes
-        this.errorAlert = page.locator("[role='alert'], .error-message, .text-red-500");
+        this.firstNameInput       = page.locator(RegisterLocators.FIRST_NAME_INPUT);
+        this.lastNameInput        = page.locator(RegisterLocators.LAST_NAME_INPUT);
+        this.emailInput           = page.locator(RegisterLocators.EMAIL_INPUT);
+        this.passwordInput        = page.locator(RegisterLocators.PASSWORD_INPUT);
+        this.submitRegisterButton = page.locator(RegisterLocators.SUBMIT_BUTTON);
+        this.errorAlert           = page.locator(RegisterLocators.ERROR_ALERT_NODES);
     }
-
 
     public HomePage registerNewUser() {
         clickCreateAccount();
@@ -42,7 +36,6 @@ public class RegisterPage extends BasePage {
 
         return new HomePage(page);
     }
-
 
     public void registerWithCustomData(String firstName, String lastName, String email, String password) {
         firstNameInput.waitFor();
