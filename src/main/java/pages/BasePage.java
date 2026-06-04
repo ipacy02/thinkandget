@@ -1,16 +1,22 @@
 package pages;
 
 import com.microsoft.playwright.Page;
+import constants.BaseLocators; // Imported base layout selectors
 
 public class BasePage {
-    protected  Page page;
+    protected Page page;
 
     public BasePage(Page page) {
         this.page = page;
     }
 
     public LoginPage navigateToLoginPage() {
-        page.locator(".btn-ghost.text-sm.py-2.px-4").click();
-       return new LoginPage(page);
+        page.locator(BaseLocators.NAVIGATE_LOGIN_BUTTON).click();
+        return new LoginPage(page);
+    }
+
+    public RegisterPage clickCreateAccount() {
+        page.locator(BaseLocators.CREATE_ACCOUNT_ANCHOR_XPATH).click();
+        return new RegisterPage(page);
     }
 }
