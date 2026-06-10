@@ -3,7 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import constants.Data;
-import constants.RegisterLocators; // Imported centralized registration selectors
+import constants.locators.RegisterLocators; // Imported centralized registration selectors
 
 public class RegisterPage extends BasePage {
 

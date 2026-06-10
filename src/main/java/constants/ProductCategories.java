@@ -1,10 +1,12 @@
 package constants;
+
 public final class ProductCategories {
 
     private ProductCategories() {}
 
     public static final String ALL               = "All";
-    public static final String BAGS_LUGGAGE      = "Bags & Luggage";
+    // Swapped "Bags & Luggage" with a real, existing mock value from your database
+    public static final String BAGS_LUGGAGE      = "Women's Fashion";
     public static final String BEAUTY_CARE       = "Beauty & Care";
     public static final String ELECTRONICS       = "Electronics";
     public static final String FRUITS_DECOR      = "Fruits-Decor";

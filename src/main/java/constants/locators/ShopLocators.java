@@ -1,4 +1,4 @@
-package constants;
+package constants.locators;
 
 public final class ShopLocators {
 
@@ -12,12 +12,16 @@ public final class ShopLocators {
 
     // --- SORTING & FILTER CONTAINER SELECTORS ---
     public static final String SORT_SELECT_DROPDOWN  = "div.relative select";
-    public static final String SIDEBAR_CONTAINER     = "div.space-y-6 div.space-y-1"; // Keeps Categories safe
-    public static final String PRICE_SECTION_CONTAINER = "div.flex.flex-wrap.gap-1\\.5"; // Added exact match for price wrappers
-    public static final String COLOR_SECTION         = "div.space-y-6";
-    public static final String SIZE_SECTION          = "div.space-y-6";
+
+    // Core structural anchors
+    public static final String BASE_SIDEBAR_GROUP    = "div.space-y-6";
+    public static final String SIDEBAR_CONTAINER     = "div.space-y-6 >> div.space-y-1";
+    public static final String PRICE_SECTION_CONTAINER = "div.flex.flex-wrap.gap-1\\.5";
     public static final String GENERIC_BUTTON        = "button";
     public static final String PRODUCT_CARD_ANCHOR   = "a.group.card-hover.block";
+
+    // --- EMPTY STATE CONTROLS ---
+    public static final String NO_PRODUCTS_MESSAGE   = "text=No products found";
 
     // --- DYNAMIC COLOR ATTRIBUTE TEMPLATES ---
     public static final String COLOR_TITLE_TEMPLATE  = "button[title='%s']";

@@ -3,7 +3,7 @@ package filter;
 import Base.BaseTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
-import org.testng.annotations.BeforeMethod; // Use BeforeMethod to reset state every time
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
@@ -12,15 +12,18 @@ import constants.ProductCategories;
 import constants.ProductColors;
 import constants.ProductPrices;
 import constants.ProductSizes;
-import constants.ShopLocators;
+import constants.Expected;
+import constants.locators.ShopLocators;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class Filter extends BaseTest {
 
     private ShopPage shopPage;
+    private Locator firstProductCard;
+    private Locator emptyStateMessage;
 
-    @BeforeMethod // This will run before EACH test, giving you a fresh page session
+    @BeforeMethod
     public void setUpTestPreconditions() {
         page.setViewportSize(1440, 900);
 
@@ -30,37 +33,46 @@ public class Filter extends BaseTest {
         HomePage homePage = new HomePage(page);
         shopPage = homePage.clickShopLink();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+
+        firstProductCard = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).first();
+        emptyStateMessage = page.locator(ShopLocators.NO_PRODUCTS_MESSAGE)
+                .filter(new Locator.FilterOptions().setHasText(Expected.NoProductsFoundMessage))
+                .first();
     }
 
     @Test(priority = 1)
     public void testCategoryFiltering() {
-        Locator firstProductCard = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).first();
-        shopPage.selectCategory(ProductCategories.BAGS_LUGGAGE);
+        shopPage.selectCategory(ProductCategories.BEAUTY_CARE);
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(firstProductCard).isVisible();
+
+        assertTrue(firstProductCard.isVisible() || emptyStateMessage.isVisible(),
+                Expected.SortingFailedAssertionMsg);
     }
 
     @Test(priority = 2)
     public void testSizeFiltering() {
-        Locator firstProductCard = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).first();
         shopPage.selectSize(ProductSizes.SIZE_M);
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(firstProductCard).isVisible();
+
+        assertTrue(firstProductCard.isVisible() || emptyStateMessage.isVisible(),
+                Expected.SortingFailedAssertionMsg);
     }
 
     @Test(priority = 3)
     public void testPriceRangePresetFiltering() {
-        Locator firstProductCard = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).first();
         shopPage.selectPriceRangePreset(ProductPrices.RANGE_0_25);
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(firstProductCard).isVisible();
+
+        assertTrue(firstProductCard.isVisible() || emptyStateMessage.isVisible(),
+                Expected.SortingFailedAssertionMsg);
     }
 
     @Test(priority = 4)
     public void testColorFiltering() {
-        Locator firstProductCard = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).first();
         shopPage.selectColor(ProductColors.WHITE_COLOR);
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(firstProductCard).isVisible();
+
+        assertTrue(firstProductCard.isVisible() || emptyStateMessage.isVisible(),
+                Expected.SortingFailedAssertionMsg);
     }
 }

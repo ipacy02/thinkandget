@@ -1,7 +1,7 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import constants.LogoutLocators;
+import constants.locators.LogoutLocators;
 
 public class LogoutPage extends BasePage{
     public LogoutPage(Page page) {

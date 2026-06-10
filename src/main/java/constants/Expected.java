@@ -16,11 +16,15 @@ public class Expected {
     public static final String InvalidEmailErrorMessage = "Please enter a valid email address";
     public static final String PasswordTooShortErrorMessage = "Password must be at least 8 characters";
     public static final String InvalidCredentialsErrorMessage = "Invalid email or password";
+    public static final String NoProductsFoundMessage = "No products found";
 
     // Centralized Test Assertion Failure Messages
     public static final String EmptyFieldsAssertionMsg = "The form submitted despite empty fields!";
     public static final String InvalidEmailAssertionMsg = "App accepted an invalid email format structure!";
     public static final String ShortPasswordAssertionMsg = "App allowed a password shorter than length constraints!";
+    public static final String SortingFailedAssertionMsg = "Sorting failed: Screen is blank (neither products nor empty state message found)!";
+    public static final String LowHighSortingAssertionMsg = "Prices are not sorted from Low to High!";
+    public static final String HighLowSortingAssertionMsg = "Prices are not sorted from High to Low!";
 
     // Test Assertion Failure Messages
     public static final String EmptyLoginAssertionMsg = "The login form submitted despite empty fields!";

@@ -1,7 +1,7 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import constants.BaseLocators; // Imported base layout selectors
+import constants.locators.BaseLocators;
 
 public class BasePage {
     protected Page page;

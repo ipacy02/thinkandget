@@ -3,7 +3,7 @@ package pages;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Locator;
 import constants.Data;
-import constants.LoginLocators; // Imported constants reference
+import constants.locators.LoginLocators; // Imported constants reference
 
 public class LoginPage extends BasePage {
 

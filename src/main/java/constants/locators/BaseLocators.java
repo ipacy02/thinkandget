@@ -1,4 +1,4 @@
-package constants;
+package constants.locators;
 
 public final class BaseLocators {
 

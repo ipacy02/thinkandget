@@ -3,42 +3,53 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import static java.util.regex.Pattern.compile;
-import constants.ShopLocators; // Imported centralized shop selectors
+import constants.locators.ShopLocators;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class ShopPage extends BasePage {
 
     private final Locator sortSelectDropdown;
-    private final Locator sidebarContainer;
     private final Locator searchToggleButton;
 
     public ShopPage(Page page) {
         super(page);
         this.sortSelectDropdown = page.locator(ShopLocators.SORT_SELECT_DROPDOWN);
-        this.sidebarContainer = page.locator(ShopLocators.SIDEBAR_CONTAINER);
         this.searchToggleButton = page.locator(ShopLocators.SEARCH_TOGGLE_BUTTON).first();
     }
 
-    // --- CATEGORY FILTERING ---
-    public ShopPage selectCategory(String categoryName) {
-        Locator categoryButton = sidebarContainer.locator(ShopLocators.GENERIC_BUTTON)
+    public void selectCategory(String categoryName) {
+        page.locator(ShopLocators.SIDEBAR_CONTAINER)
+                .first()
+                .locator(ShopLocators.GENERIC_BUTTON)
                 .filter(new Locator.FilterOptions().setHasText(categoryName))
-                .first();
-
-        categoryButton.waitFor();
-        categoryButton.click();
-        return this;
+                .click();
     }
 
-    // --- DROPDOWN SORTING ---
     public ShopPage selectSortOption(String targetValue) {
         sortSelectDropdown.waitFor();
         sortSelectDropdown.selectOption(targetValue);
         return this;
     }
 
-    // --- PRESET PRICE CAPSULE FILTERING ---
+    public List<Double> getProductPrices() {
+        Locator priceElements = page.locator(ShopLocators.PRODUCT_CARD_ANCHOR).locator(".text-lg.font-bold");
+
+        List<Double> prices = new ArrayList<>();
+        int count = priceElements.count();
+
+        for (int i = 0; i < count; i++) {
+            String rawText = priceElements.nth(i).innerText();
+            String cleanText = rawText.replaceAll("[^0-9.]", "");
+            if (!cleanText.isEmpty()) {
+                prices.add(Double.parseDouble(cleanText));
+            }
+        }
+        return prices;
+    }
+
     public ShopPage selectPriceRangePreset(String rangeText) {
-        // Target the correct 'flex-wrap' container node directly
         Locator rangeButton = page.locator(ShopLocators.PRICE_SECTION_CONTAINER)
                 .locator(ShopLocators.GENERIC_BUTTON)
                 .filter(new Locator.FilterOptions().setHasText(rangeText))
@@ -49,9 +60,8 @@ public class ShopPage extends BasePage {
         return this;
     }
 
-    //--- SIZE SORTING ---
     public ShopPage selectSize(String sizeText) {
-        Locator sizeButton = page.locator(ShopLocators.SIZE_SECTION)
+        Locator sizeButton = page.locator(ShopLocators.BASE_SIDEBAR_GROUP)
                 .filter(new Locator.FilterOptions().setHasText(ShopLocators.SIZE_SECTION_TEXT))
                 .locator(ShopLocators.GENERIC_BUTTON)
                 .filter(new Locator.FilterOptions().setHasText(compile("^" + sizeText + "$")))
@@ -62,18 +72,17 @@ public class ShopPage extends BasePage {
         return this;
     }
 
-    //--- COLOR SORTING ---
     public ShopPage selectColor(String colorName) {
-        Locator colorSection = page.locator(ShopLocators.COLOR_SECTION)
+        Locator colorSection = page.locator(ShopLocators.BASE_SIDEBAR_GROUP)
                 .filter(new Locator.FilterOptions().setHasText(ShopLocators.COLOR_SECTION_TEXT));
 
         Locator colorButton = colorSection.locator(ShopLocators.GENERIC_BUTTON)
                 .filter(new Locator.FilterOptions().setHasText(
-                        compile("^" + colorName + "$", java.util.regex.Pattern.CASE_INSENSITIVE)
+                        compile("^" + colorName + "$", Pattern.CASE_INSENSITIVE)
                 ))
-                .or(colorSection.locator("button[title='" + colorName + "']"))
-                .or(colorSection.locator("button[value='" + colorName + "']"))
-                .or(colorSection.locator("button[class*='bg-" + colorName.toLowerCase() + "']"))
+                .or(colorSection.locator(String.format(ShopLocators.COLOR_TITLE_TEMPLATE, colorName)))
+                .or(colorSection.locator(String.format(ShopLocators.COLOR_VALUE_TEMPLATE, colorName)))
+                .or(colorSection.locator(String.format(ShopLocators.COLOR_CLASS_TEMPLATE, colorName.toLowerCase())))
                 .first();
 
         colorButton.waitFor();
@@ -81,17 +90,12 @@ public class ShopPage extends BasePage {
         return this;
     }
 
-    // --- SEARCH WORKFLOW METHOD ---
-
     public ShopPage searchProduct(String productName) {
-        // 1. Click the header magnifying glass to open up the search modal overlay
         searchToggleButton.waitFor();
         searchToggleButton.click();
 
-        // 2. Locate the input field dynamically inside the method once it pops onto the DOM
         Locator contextualSearchInput = page.locator(ShopLocators.SEARCH_INPUT_FIELD).first();
 
-        // 3. Complete the interactive step sequence safely
         contextualSearchInput.waitFor();
         contextualSearchInput.fill("");
         contextualSearchInput.pressSequentially(productName);
@@ -104,7 +108,6 @@ public class ShopPage extends BasePage {
                 .filter(new Locator.FilterOptions().setHasText(ShopLocators.SEARCH_RESULTS_TEXT))
                 .first();
     }
-
 
     public Locator getProductCardByName(String productName) {
         return page.locator(ShopLocators.PRODUCT_CARD_ANCHOR)

@@ -9,7 +9,7 @@ import pages.HomePage;
 import pages.LoginPage;
 import pages.ShopPage;
 import constants.ProductSearch;
-import constants.ShopLocators; // Imported for the final negative assertion card match
+import constants.locators.ShopLocators; // Imported for the final negative assertion card match
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
