@@ -1,6 +1,7 @@
 package pages;
 
 import com.microsoft.playwright.Page;
+import constants.locators.LogoutLocators;
 
 public class LogoutPage extends BasePage{
     public LogoutPage(Page page) {
@@ -8,7 +9,7 @@ public class LogoutPage extends BasePage{
     }
 
     public void logout() {
-        page.locator("div.relative.group:has-text('Sign out')").hover();
-        page.click("text=Sign out");
+        page.locator(LogoutLocators.USER_DROPDOWN_CONTAINER).hover();
+        page.click(LogoutLocators.SIGN_OUT_BUTTON);
     }
 }
